@@ -10,6 +10,8 @@ import (
 type server struct {
 	srv  *echo.Echo
 	port int
+
+	controller Controller
 }
 
 func (s *server) Start() {
@@ -23,9 +25,16 @@ func NewServer(config *Config) (*server, error) {
 		return c.String(http.StatusOK, "Hello, world!")
 	})
 
+	controller, err := NewController()
+	if err != nil {
+		return nil, err
+	}
+
 	server := &server{
 		srv:  e,
 		port: config.Port,
+
+		controller: controller,
 	}
 	AttachRoutes(server)
 	return server, nil
