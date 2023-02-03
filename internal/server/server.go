@@ -27,8 +27,6 @@ func NewServer(config *Config) (*server, error) {
 		srv:  e,
 		port: config.Port,
 	}
-
-	// attach routes here
-
+	AttachRoutes(server)
 	return server, nil
 }
