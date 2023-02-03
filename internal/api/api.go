@@ -34,7 +34,9 @@ type GetBookListResponse struct {
 }
 
 // Request parameters for creating a book.
-type CreateBookRequestParams struct{}
+type CreateBookRequestParams struct {
+	ISBN string `json:"isbn"`
+}
 
 func (p CreateBookRequestParams) Validate() error {
 	// check bound parameters here
@@ -63,6 +65,8 @@ type GetBookResponse struct {
 // Request parameters for updating a book.
 type UpdateBookRequestParams struct {
 	ID int `param:"id"`
+
+	ISBN string `json:"isbn"`
 }
 
 type UpdateBookResponse struct {

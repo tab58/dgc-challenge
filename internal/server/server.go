@@ -5,11 +5,14 @@ import (
 	"net/http"
 
 	echo "github.com/labstack/echo/v4"
+	"github.com/tab58/dgc-challenge/internal/api/db"
 )
 
 type server struct {
 	srv  *echo.Echo
 	port int
+
+	dbClient db.DBClient
 
 	controller Controller
 }
@@ -25,7 +28,12 @@ func NewServer(config *Config) (*server, error) {
 		return c.String(http.StatusOK, "Hello, world!")
 	})
 
-	controller, err := NewController()
+	dbClient, err := db.NewSomeDBClient()
+	if err != nil {
+		return nil, err
+	}
+
+	controller, err := NewController(dbClient)
 	if err != nil {
 		return nil, err
 	}
